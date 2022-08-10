@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: test-app
-          image: mock-message-producer:latest
+          image: registry.local/mock-message-producer:latest
           imagePullPolicy: Never
           env:
             - name: SPRING_APPLICATION_JSON
