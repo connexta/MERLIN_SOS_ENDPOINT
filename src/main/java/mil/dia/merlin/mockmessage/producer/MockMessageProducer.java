@@ -1,4 +1,4 @@
-package mil.afdcgs.merlin.mockmessage.producer;
+package mil.dia.merlin.mockmessage.producer;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;

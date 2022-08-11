@@ -1,4 +1,4 @@
-package mil.afdcgs.merlin.mockmessage;
+package mil.dia.merlin.mockmessage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

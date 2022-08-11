@@ -1,4 +1,4 @@
-package mil.afdcgs.merlin.mockmessage.kafka;
+package mil.dia.merlin.mockmessage.kafka;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.IntegerSerializer;
