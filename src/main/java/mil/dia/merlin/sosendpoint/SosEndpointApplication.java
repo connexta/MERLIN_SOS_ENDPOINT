@@ -1,11 +1,11 @@
-package mil.dia.merlin.mockmessage;
+package mil.dia.merlin.sosendpoint;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MockMessageProducerApplication {
+public class SosEndpointApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MockMessageProducerApplication.class);
+        SpringApplication.run(SosEndpointApplication.class);
     }
 }
