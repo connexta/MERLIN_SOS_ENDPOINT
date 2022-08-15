@@ -1,11 +1,10 @@
 # Purpose
 
-The mock message producer is used to simulate streams of data being sent to Kafka topics.
+The sos-endpoint accepts JSON as simple text and puts it on a topic. 
 
 # Project Structure
 
 * `src/main/java` - the service source code
-* `src/main/test` - unit tests
 * `src/main/kubernetes` - `Kubernetes` artifacts
 
 This is a `Spring Boot` application which is deployed in `Kubernetes`. The container is built using the `jib` plugin
@@ -16,10 +15,12 @@ for `Maven`.
 The application configuration is handled through a `Kubernetes` `ConfigMap` which is automatically read in by `Spring
 Boot` at deployment time. The following properties are supported:
 
-* [required]`mil.afdcgs.merlin.mockmessage.kafka.bootstrap-server`: the `DNS` name of the `Kafka` bootstrap server to 
-  connect to.
-* [required]`mil.afdcgs.merlin.mockmessage.target-topic`: the `DNS` name of the `Kafka` topic to send messages to. Note
-that this topic must already exist.
+* [required]`mil.afdcgs.merlin.sos.kafka.bootstrap-server`: the `DNS` name of the `Kafka` bootstrap server to connect
+  to.
+* [default 1] `mil.afdcgs.merlin.sos.kafka.partition-count`: the number of partitions for each created topic.
+* [default 1] `mil.afdcgs.merlin.sos.kafka.replica-count`: the number of partition replicas to create across the
+  cluster. This number can't exceed the number of nodes in the cluster.
+
 
 ## Dependencies
 
@@ -37,6 +38,12 @@ mvn clean install
 
 This will create a `Docker` container image and upload it to the local `Docker` repository.
 
+# Testing
+To send data to the endpoint using `curl`:
+```shell
+curl -v sos-endpoint:8082/sos/sensor -H 'Content-Type:application/json' -d '{"name": "Elrond", "role": "Elf Lord"}'
+```
+
 # Deployment
 ## Local Development
 For local development and testing, where the image can't be pushed to a `Docker` repository, then the image should be
@@ -44,25 +51,19 @@ uploaded to the `Kubernetes` node. The instructions given here are for `k3s`, bu
 provide an equivalent process.
 
 ```shell
-$ docker save --output=target/mock-message-producer-latest.tar mock-message-producer:latest
-```
-```shell
-$ sudo k3s ctr images import target/mock-message-producer-latest.tar
-```
-```shell
-$ kubectl apply -f src/main/kubernetes/merlin-phase1-mockmessageproducer.yaml
+$ kubectl apply -f src/main/kubernetes/merlin-sos-endpoint.yaml
 ```
 
 ## Test/Production Environments
 In an environment where the service has been uploaded to a `Docker` repository, it can be deployed with:
 ```shell
-$ kubectl apply -f src/main/kubernetes/merlin-phase1-mockmessageproducer.yaml
+$ kubectl apply -f src/main/kubernetes/merlin-sos-endpoint.yaml
 ```
 
 ## Uninstall
 It can be removed with:
 ```shell
-$ kubectl delete -f src/main/kubernetes/merlin-phase1-mockmessageproducer.yaml
+$ kubectl delete -f src/main/kubernetes/merlin-sos-endpoint.yaml
 ```
 
 

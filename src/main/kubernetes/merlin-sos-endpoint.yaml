@@ -8,7 +8,6 @@ data:
   application.json:
     ' {
     "mil.afdcgs.merlin.mockmessage.kafka.bootstrap-server": "kafka-0.kafka-headless.merlin-phase1.svc.cluster.local:9092",
-    "mil.afdcgs.merlin.mockmessage.target-topic": "streams-merlin-input"
   }'
 ---
 kind: Deployment
