@@ -20,7 +20,7 @@ import java.util.Map;
 
 @Configuration
 @EnableKafka
-class MerlinMessageProducerConfiguration {
+class MessageProducerConfiguration {
     @Value("${mil.afdcgs.merlin.mockmessage.kafka.bootstrap-server}")
     private String bootstrapServer;
 

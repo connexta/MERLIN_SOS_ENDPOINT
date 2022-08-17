@@ -28,6 +28,7 @@ The project uses these modules:
 
 * `spring-boot-starter-actuator` - This module allows us to monitor the service health and metrics through `HTTP`.
 * `spring-kafka` - a Spring library for connecting to `Kafka` and using it in a Spring-like fashion.
+* `spring-boot-starter-websocket` - a Spring library for handing websockets.
 
 # Build
 
@@ -41,29 +42,38 @@ This will create a `Docker` container image and upload it to the local `Docker` 
 # Testing
 To send data to the endpoint using `curl`:
 ```shell
-curl -v sos-endpoint:8082/sos/sensor -H 'Content-Type:application/json' -d '{"name": "Elrond", "role": "Elf Lord"}'
+curl -v localhost:8082/sos/sensor -H 'Content-Type:application/json' -d '{"name": "Elrond", "role": "Elf Lord"}'
 ```
 
 # Deployment
 ## Local Development
-For local development and testing, where the image can't be pushed to a `Docker` repository, then the image should be
-uploaded to the `Kubernetes` node. The instructions given here are for `k3s`, but any locally-hosted `Kubernetes` should
-provide an equivalent process.
+For local development and testing, the process for making the built images available to the `kubernetes` cluster is
+dependent upon the `Kubernetes`
 
+Note: If you're running on Docker Desktop then this step is not required.
+
+### On `k3s` *with* a local Docker registry desployed in the cluster:
 ```shell
-$ kubectl apply -f src/main/kubernetes/merlin-sos-endpoint.yaml
+$ docker push registry.local/sos-endpoint:latest
 ```
 
-## Test/Production Environments
-In an environment where the service has been uploaded to a `Docker` repository, it can be deployed with:
+### On `k3s` *without* a Docker registry deployed in the cluster:
 ```shell
-$ kubectl apply -f src/main/kubernetes/merlin-sos-endpoint.yaml
+$ docker save --output target/sos-endpoint-latest.tar registry.local/sos-endpoint:latest
+```
+```shell
+$ sudo k3s ctr images import target/sos-endpoint-latest.tar
+```
+
+## Create Kubernetes Artifcats
+```shell
+$ kubectl apply -f src/main/kubernetes/sos-endpoint.yaml
 ```
 
 ## Uninstall
 It can be removed with:
 ```shell
-$ kubectl delete -f src/main/kubernetes/merlin-sos-endpoint.yaml
+$ kubectl delete -f src/main/kubernetes/sos-endpoint.yaml
 ```
 
 
