@@ -48,6 +48,7 @@ metadata:
   labels:
     run: sos-ep-svc
 spec:
+  type: NodePort
   selector:
     name: sos-endpoint
   ports:
@@ -58,17 +59,19 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: sos-localhost
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  name: sos-endpoint-ingress
 spec:
   rules:
-    - host: sos.local
+    - host: merlin.localdev.me
       http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
+          - backend:
               service:
                 name: sos-ep-svc
                 port:
                   number: 8080
-  ingressClassName: nginx
+            path: /
+            pathType: Prefix
+

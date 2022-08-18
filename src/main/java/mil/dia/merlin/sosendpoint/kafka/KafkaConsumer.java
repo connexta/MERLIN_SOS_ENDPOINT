@@ -13,7 +13,7 @@ class KafkaConsumer {
         this.consumeFunction = consumeFunction;
     }
 
-    @KafkaListener(topics = "merlin-observations-xml")
+    @KafkaListener(id = "merlin", topics = "merlin-observations-xml")
     public void listen(String in) {
         consumeFunction.accept(in);
     }
