@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: sos-endpoint
-          image: registry.local/sos-endpoint:latest
+          image: registry.localdev.me/sos-endpoint:latest
           env:
             - name: SPRING_APPLICATION_JSON
               valueFrom:
@@ -72,6 +72,6 @@ spec:
                 name: sos-ep-svc
                 port:
                   number: 8080
-            path: /
+            path: /sos
             pathType: Prefix
 

@@ -42,7 +42,7 @@ This will create a `Docker` container image and upload it to the local `Docker` 
 # Testing
 To send data to the endpoint using `curl`:
 ```shell
-curl -v localhost:8082/sos/sensor -H 'Content-Type:application/json' -d '{"name": "Elrond", "role": "Elf Lord"}'
+curl -v merlin.localdev.me/sos/sensor -H 'Content-Type:application/json' -d '{"name": "Elrond", "role": "Elf Lord"}'
 ```
 
 # Deployment
@@ -54,12 +54,12 @@ Note: If you're running on Docker Desktop then this step is not required.
 
 ### On `k3s` *with* a local Docker registry desployed in the cluster:
 ```shell
-$ docker push registry.local/sos-endpoint:latest
+$ docker push registry.localdev.me/sos-endpoint:latest
 ```
 
 ### On `k3s` *without* a Docker registry deployed in the cluster:
 ```shell
-$ docker save --output target/sos-endpoint-latest.tar registry.local/sos-endpoint:latest
+$ docker save --output target/sos-endpoint-latest.tar registry.localdev.me/sos-endpoint:latest
 ```
 ```shell
 $ sudo k3s ctr images import target/sos-endpoint-latest.tar
