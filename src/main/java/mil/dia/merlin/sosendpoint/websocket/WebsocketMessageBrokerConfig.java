@@ -16,17 +16,14 @@ import java.util.Set;
 @EnableWebSocketMessageBroker
 class WebsocketMessageBrokerConfig implements WebSocketMessageBrokerConfigurer {
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry config){
-        config.enableSimpleBroker("/topic/");
-        config.setApplicationDestinationPrefixes("/sos");
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/websocket").withSockJS();
     }
 
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/sensors")
-                .withSockJS();
-        registry.addEndpoint("/observations")
-                .withSockJS();
+    public void configureMessageBroker(MessageBrokerRegistry registry) {
+        registry.setApplicationDestinationPrefixes("/app");
+        registry.enableSimpleBroker("/topic");
     }
 
     @Bean
