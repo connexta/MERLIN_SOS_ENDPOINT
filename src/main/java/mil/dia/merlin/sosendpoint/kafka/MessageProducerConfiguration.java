@@ -87,7 +87,7 @@ class MessageProducerConfiguration {
     }
 
     @Bean
-    public KafkaTemplate<Integer, String> kafkaTemplate(ProducerFactory producerFactory) {
-        return new KafkaTemplate<Integer, String>(producerFactory);
+    public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory producerFactory) {
+        return new KafkaTemplate<String, String>(producerFactory);
     }
 }
