@@ -7,7 +7,7 @@ metadata:
 data:
   application.json:
     ' {
-    "mil.afdcgs.merlin.mockmessage.kafka.bootstrap-server": "kafka-0.kafka-headless.merlin-phase1.svc.cluster.local:9092",
+    "mil.dia.merlin.mockmessage.kafka.bootstrap-server": "kafka-0.kafka-headless.merlin-phase1.svc.cluster.local:9092",
     "server.port": 8080
   }'
 ---
@@ -28,10 +28,18 @@ spec:
       labels:
         name: sos-endpoint
     spec:
+      initContainers:
+        - name: sos-enpoint-initializer
+          image: registry.localdev.me/sos-endpoint-initializer:latest
+          env:
+            - name: SPRING_APPLICATION_JSON
+              valueFrom:
+                configMapKeyRef:
+                  name: sos-ep-config
+                  key: application.json
       containers:
         - name: sos-endpoint
-          image: registry.localdev.me/sos-endpoint:latest
-          imagePullPolicy: IfNotPresent
+          image: registry.localdev.me/sos-endpoint-controller:latest
           env:
             - name: SPRING_APPLICATION_JSON
               valueFrom:

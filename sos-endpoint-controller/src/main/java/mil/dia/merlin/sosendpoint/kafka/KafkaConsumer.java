@@ -17,13 +17,13 @@ class KafkaConsumer {
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
-    @KafkaListener(id = "sos-endpoint-sensors", topics = "merlin-sensors-json")
+    @KafkaListener(id = "sos-endpoint-sensors", topics = "merlin-sensors-ui")
     public void listenSensors(String in) {
         logger.info("received sensor from kafka: " + in);
         simpMessagingTemplate.convertAndSend("/topic/sensors", in);
     }
 
-    @KafkaListener(id = "sos-endpoint-observations", topics = "merlin-observations-json")
+    @KafkaListener(id = "sos-endpoint-observations", topics = "merlin-observations-ui")
     public void listenObservations(String in) {
         logger.info("received observation from kafka: " + in);
         simpMessagingTemplate.convertAndSend("/topic/observations", in);

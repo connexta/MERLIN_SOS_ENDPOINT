@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SosEndpointApplication {
+public class SosEndpointControllerApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SosEndpointApplication.class);
+        SpringApplication.run(SosEndpointControllerApplication.class);
     }
 }
